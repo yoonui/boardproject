@@ -1,6 +1,6 @@
 package com.boardproject.board.entity;
 
-import java.time.LocalDateTime;
+import com.boardproject.board.dto.BoardDTO;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -15,7 +15,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Table(name = "board_table")
-public class BoardEntity {
+public class BoardEntity extends BaseEntity {
     @Id // pk 컬럼 지정. 필수
     @GeneratedValue(strategy = GenerationType.IDENTITY) // auto_increment. 자동으로 숫자를 증사
     private Long id;
@@ -35,4 +35,15 @@ public class BoardEntity {
     @Column
     private int boardHits;
 
+    public static BoardEntity toSaveEntity(BoardDTO boardDTO){
+        BoardEntity boardEntity = new BoardEntity();
+        
+        boardEntity.setBoardWriter(boardDTO.getBoardWriter());
+        boardEntity.setBoardPass(boardDTO.getBoardPass());
+        boardEntity.setBoardTitle(boardDTO.getBoardTitle());
+        boardEntity.setBoardContents(boardDTO.getBoardContents());
+        boardEntity.setBoardHits(0);
+
+        return boardEntity;
+    }
 }
