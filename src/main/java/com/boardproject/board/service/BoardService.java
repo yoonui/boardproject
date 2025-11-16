@@ -2,6 +2,7 @@ package com.boardproject.board.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
@@ -9,6 +10,7 @@ import com.boardproject.board.dto.BoardDTO;
 import com.boardproject.board.entity.BoardEntity;
 import com.boardproject.board.repository.BoardRepository;
 
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -30,5 +32,20 @@ public class BoardService {
         }
 
         return boardDTOList;
+    }
+
+    @Transactional
+    public void updateHits(Long id) {
+        boardRepository.updateHits(id);
+    }
+
+    public BoardDTO findById(Long id) {
+        Optional<BoardEntity> optionalBoardEntity = boardRepository.findById(id);
+        if(optionalBoardEntity.isPresent()){
+            BoardEntity boardEntity = optionalBoardEntity.get();
+            BoardDTO boardDTO = BoardDTO.tBoardDTO(boardEntity);
+            return boardDTO;
+        }
+        return null;
     };
 }
