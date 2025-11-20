@@ -32,7 +32,7 @@ public class BoardService {
         List<BoardDTO> boardDTOList = new ArrayList<>();
 
         for(BoardEntity boardEntity : boardEntityList){
-            boardDTOList.add(BoardDTO.tBoardDTO(boardEntity));
+            boardDTOList.add(BoardDTO.toBoardDTO(boardEntity));
         }
 
         return boardDTOList;
@@ -47,7 +47,7 @@ public class BoardService {
         Optional<BoardEntity> optionalBoardEntity = boardRepository.findById(id);
         if(optionalBoardEntity.isPresent()){
             BoardEntity boardEntity = optionalBoardEntity.get();
-            BoardDTO boardDTO = BoardDTO.tBoardDTO(boardEntity);
+            BoardDTO boardDTO = BoardDTO.toBoardDTO(boardEntity);
             return boardDTO;
         }
         return null;
@@ -68,6 +68,7 @@ public class BoardService {
         int pageLimit = 3; // 한 페이지에 보여줄 글 갯수
         Page<BoardEntity> boardEntites = boardRepository.findAll(PageRequest.of(page, pageLimit, Sort.by(Sort.Direction.DESC, "boardCreatedTime")));
 
-        return null;
+        Page<BoardDTO> boardDTOS = boardEntites.map(board -> new BoardDTO(board.getId(), board.getBoardWriter(), board.getBoardTitle(), board.getBoardHits(), board.getBoardCreatedTime()));
+        return boardDTOS;
     };
 }
