@@ -2,6 +2,9 @@ package com.boardproject.board.controller;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,8 +18,6 @@ import com.boardproject.board.service.BoardService;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.web.bind.annotation.PostMapping;
-
-
 
 @Controller
 @RequiredArgsConstructor
@@ -76,5 +77,9 @@ public class BoardController {
         return "redirect:/board/";
     }
     
-    
+    @GetMapping("/paging")
+    public String paging(@PageableDefault(page = 1) Pageable pageable, Model model) {
+        Page<BoardDTO> boardList = boardService.paging(pageable);
+        return "";
+    }
 }
