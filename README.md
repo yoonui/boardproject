@@ -7,3 +7,6 @@
 5. 글삭제 /board/delete/{id}
 6. 페이징 /board/paging
    - /board/paging?page=2
+7. 파일(이미지) 첨부하기
+   - 단일 파일 첨부
+   - 다중 파일 첨부

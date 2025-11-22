@@ -5,7 +5,7 @@
     <title>save</title>
   </head>
   <body>
-    <form action="/board/save" method="post">
+    <form action="/board/save" method="post" enctype="multipart/form-data">
       <!-- 작성자 -->
       writer: <input type="text" name="boardWriter" /> <br />
 
@@ -18,6 +18,8 @@
       <!-- 내용 -->
       contents: <textarea name="boardContents" cols="30" rows="10"></textarea>
       <br />
+
+      file: <input type="file" name="boardFile" /> <br />
 
       <input type="submit" value="글작성" />
     </form>
