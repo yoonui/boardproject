@@ -15,6 +15,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.boardproject.board.dto.BoardDTO;
 import com.boardproject.board.entity.BoardEntity;
+import com.boardproject.board.entity.BoardFileEntity;
+import com.boardproject.board.repository.BoardFileRepository;
 import com.boardproject.board.repository.BoardRepository;
 
 import jakarta.transaction.Transactional;
@@ -24,6 +26,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class BoardService {
     private final BoardRepository boardRepository;
+    private final BoardFileRepository boardFileRepository;
     
     public void save(BoardDTO boardDTO) throws IOException{
         // 파일 첨부 여부에 따라 로직 분리
@@ -47,6 +50,13 @@ public class BoardService {
             String storedFileName = System.currentTimeMillis() + "_" + originalFileName;
             String savePath = "C:/Users/yoony/Desktop/board/springboot_img/" + storedFileName;
             boardFile.transferTo(new File(savePath));
+            BoardEntity boardEntity = BoardEntity.toSaveFileEntity(boardDTO);
+            // boardEntity에는 id값이 없어서 바로 사용하지 않음
+            Long savedId = boardRepository.save(boardEntity).getId();
+            BoardEntity board = boardRepository.findById(savedId).get();
+
+            BoardFileEntity boardFileEntity = BoardFileEntity.toBoardFileEntity(board, originalFileName, storedFileName);
+            boardFileRepository.save(boardFileEntity);
         }
     }
 
