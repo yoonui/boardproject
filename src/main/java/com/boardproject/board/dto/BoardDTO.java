@@ -53,6 +53,15 @@ public class BoardDTO {
         boardDTO.setBoardCreatedTime(boardEntity.getBoardCreatedTime());
         boardDTO.setBoardUpdatedTime(boardEntity.getBoardUpdatedTime());
 
+        if(boardEntity.getFileAttached() == 0) {
+            boardDTO.setFileAttached(boardEntity.getFileAttached()); // 0
+        } else {
+            boardDTO.setFileAttached(boardEntity.getFileAttached()); // 1
+            // 파일 이름을 가져가야 함
+            boardDTO.setOriginalFileName(boardEntity.getBoardFileEntityList().get(0).getOriginalFileName());
+            boardDTO.setStoredFileName(boardEntity.getBoardFileEntityList().get(0).getStoredFileName());
+        }
+
         return boardDTO;
     }
 }
