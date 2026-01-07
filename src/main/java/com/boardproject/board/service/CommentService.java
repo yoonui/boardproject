@@ -1,5 +1,7 @@
 package com.boardproject.board.service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.stereotype.Service;
@@ -29,5 +31,19 @@ public class CommentService {
         } else {
             return null;
         }
+    }
+
+    public List<CommentDTO> findAll(Long boardId) {
+        // select * from comment_table where board_id=? order by board_created_time desc;
+        BoardEntity boardEntity = boardRepository.findById(boardId).get();
+        List<CommentEntity> commentEntityList = commentRepository.findAllByBoardEntityOrderByCreatedTimeDesc(boardEntity);
+        
+        /* EntityList -> DTOList */
+        List<CommentDTO> commentDTOList = new ArrayList<>();
+        for (CommentEntity commentEntity : commentEntityList){
+            CommentDTO commentDTO = CommentDTO.toCommentDTO(commentEntity, boardId);
+            commentDTOList.add(commentDTO);
+        }
+        return commentDTOList;
     }
 }
