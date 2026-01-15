@@ -104,7 +104,7 @@ public class BoardService {
     public Page<BoardDTO> paging(Pageable pageable) {
         int page = pageable.getPageNumber() - 1;
         int pageLimit = 3; // 한 페이지에 보여줄 글 갯수
-        Page<BoardEntity> boardEntites = boardRepository.findAll(PageRequest.of(page, pageLimit, Sort.by(Sort.Direction.DESC, "boardCreatedTime")));
+        Page<BoardEntity> boardEntites = boardRepository.findAll(PageRequest.of(page, pageLimit, Sort.by(Sort.Direction.DESC, "createdTime")));
 
         Page<BoardDTO> boardDTOS = boardEntites.map(board -> new BoardDTO(board.getId(), board.getBoardWriter(), board.getBoardTitle(), board.getBoardHits(), board.getCreatedTime()));
         return boardDTOS;
