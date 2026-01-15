@@ -27,7 +27,9 @@ public class BoardDTO {
     private String boardTitle;
     private String boardContents;
     private int boardHits;
+
     private LocalDateTime boardCreatedTime;
+    
     private LocalDateTime boardUpdatedTime;
 
     private List<MultipartFile> boardFile; // save.html -> Controller 파일 담는 용도
