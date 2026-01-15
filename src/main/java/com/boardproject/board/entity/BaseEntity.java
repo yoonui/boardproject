@@ -17,9 +17,9 @@ import lombok.Getter;
 public class BaseEntity {
     @CreationTimestamp
     @Column(updatable = false)
-    private LocalDateTime boardCreatedTime;
+    private LocalDateTime createdTime;
     
     @UpdateTimestamp
     @Column(insertable = false)
-    private LocalDateTime boardUpdatedTime;
+    private LocalDateTime updatedTime;
 }

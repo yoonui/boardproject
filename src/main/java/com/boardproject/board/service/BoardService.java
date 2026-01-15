@@ -106,7 +106,7 @@ public class BoardService {
         int pageLimit = 3; // 한 페이지에 보여줄 글 갯수
         Page<BoardEntity> boardEntites = boardRepository.findAll(PageRequest.of(page, pageLimit, Sort.by(Sort.Direction.DESC, "boardCreatedTime")));
 
-        Page<BoardDTO> boardDTOS = boardEntites.map(board -> new BoardDTO(board.getId(), board.getBoardWriter(), board.getBoardTitle(), board.getBoardHits(), board.getBoardCreatedTime()));
+        Page<BoardDTO> boardDTOS = boardEntites.map(board -> new BoardDTO(board.getId(), board.getBoardWriter(), board.getBoardTitle(), board.getBoardHits(), board.getCreatedTime()));
         return boardDTOS;
     };
 }

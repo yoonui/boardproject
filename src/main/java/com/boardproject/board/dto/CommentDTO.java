@@ -17,13 +17,14 @@ public class CommentDTO {
     private String commentContents;
     private Long boardId;
     private LocalDateTime commentCreatedTime;
+
     public static CommentDTO toCommentDTO(CommentEntity commentEntity, Long boardId) {
         CommentDTO commentDTO = new CommentDTO();
 
         commentDTO.setId(commentEntity.getId());
         commentDTO.setCommentWriter(commentEntity.getCommentWriter());
         commentDTO.setCommentContents(commentEntity.getCommentContents());
-        commentDTO.setCommentCreatedTime(commentEntity.getBoardCreatedTime());
+        commentDTO.setCommentCreatedTime(commentEntity.getCreatedTime());
         // commentDTO.setBoardId(commentEntity.getBoardEntity().getId()); // Service 메서드에 @Transactional 어노테이션 붙이기
         commentDTO.setBoardId(boardId);
 
